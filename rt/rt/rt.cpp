@@ -5,6 +5,8 @@
 
 int main()
 {
+    int x;
+    std::cin >> (x);
     std::cout << "Hello World!\n";
   
 }
