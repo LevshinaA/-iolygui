@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <windows.h>
+#include <cstring>
 using namespace std;
 
 struct Tube {
@@ -12,9 +13,20 @@ public:
 		cin >> length;
 		cout << "Введите диаетр: ";
 		cin >> diameter;
-		cout << "Введите описание: ";
-		cin >> feature;
+		cout << "Выберите № признака:\n 1.В ремонте\n 2.Не в ремонте";
+		cin >> feature_num;
+		cout << feature_num;
+		if (stoi(feature_num) == 1) {
+			feature = "В ремонте";
+		}
+		else if (stoi(feature_num) == 2) {
+			feature = "Не в ремонте";
+		}
+		else {
+			cout << ("Ошибка! 1 или 2") << endl;
+			addparams();
 
+		}
 	}
 	string show() {
 		return ("Длина: " + length + "   Диаметр : " + diameter + "   Признак : " + feature);
@@ -27,21 +39,30 @@ public:
 			cout << "\nВведите новую длину:";
 			cin >> length;
 		}
-		if (change_number == 2) {
+		else if (change_number == 2) {
 			cout << "Введите новый диаметр:";
 			cin >> diameter;
 		}
-		if (change_number == 3) {
-			cout << "Введите новый признак:";
-			cin >> feature;
+		else if (change_number == 3) {
+			cout << "Выберите № признака:\n 1.В ремонте\n 2.Не в ремонте";
+			cin >> feature_num;
+			if (stoi(feature_num) == 1)
+				feature = "В ремонте";
+			else if (stoi(feature_num) == 2)
+				feature = "Не в ремонте";
+			else {
+				cout << ("Ошибка! 1 или 2") << endl;
+				change();
+			}
 		}
 		else {
 			cout << "\nOшибка\n";
 			change();
 		}
+		
 	}
 private:
-	string length, diameter, feature;
+	string length, diameter, feature, feature_num;
 	int change_number;
 };
 
@@ -56,6 +77,7 @@ public:
 		cin >> departments_in_use;
 		cout << "Введите эффективность: ";
 		cin >> feature;
+		
 	}
 	string show() {
 		//SetConsoleCP(1251);
@@ -69,15 +91,15 @@ public:
 			cout << "\nВведите новое название:";
 			cin >> name;
 		}
-		if (change_number == 2) {
+		else if (change_number == 2) {
 			cout << "Введите новое колличество цехов:";
 			cin >> departments;
 		}
-		if (change_number == 3) {
+		else if (change_number == 3) {
 			cout << "Введите новое колличество цехов в работе:";
 			cin >> departments_in_use;
 		}
-		if (change_number == 4) {
+		else if (change_number == 4) {
 			cout << "Введите новую эффективность:";
 			cin >> feature;
 		}
@@ -88,7 +110,7 @@ public:
 	}
 private:
 	int change_number;
-	string name, feature, departments, departments_in_use, type = "КС";
+	string name, departments, departments_in_use,feature, type = "КС";
 };
 
 class Main {
@@ -99,20 +121,21 @@ public:
 			cin >> button;
 			if (button == 1)
 				button_1();
-			if (button == 2)
+			else if (button == 2)
 				button_2();
-			if (button == 3)
+			else if (button == 3)
 				button_3();
-			if (button == 4)
+			else if (button == 4)
 				button_4();
-			if (button == 5)
+			else if (button == 5)
 				button_5();
-			if (button == 6)
+			else if (button == 6)
 				button_6();
-			if (button == 7)
+			else if (button == 7)
 				button_7();
-			if (button == 0)
+			else if (button == 0)
 				break;
+			else start();
 		}
 	}
 
@@ -193,16 +216,15 @@ private:
 		if (!fs.is_open())
 			cout << "Ошибка открытие файла";
 		while (!fs.eof()) {
-
 			getline(fs, txt);
-			
+			cout << txt;
 		}
 	}
 };
 int main() {
 	Main programm;
-	setlocale(LC_ALL, "Russian");
 
+	setlocale(LC_ALL, "Russian");
 
 	programm.start();
 
