@@ -10,7 +10,7 @@ public:
 	void filesave(string tube[]) {
 		length = tube[0];
 		diameter = tube[1];
-		if (tube[2] == "B" || tube[2] == "Не") {
+		if (tube[2] == "В" || tube[2] == "Не") {
 			if (tube[2] == "Не")
 				feature = "Не в ремонте";
 			else
@@ -211,7 +211,7 @@ private:
 			}
 		}
 		else
-			cout << "\n Ёще нет труб\n";
+			cout << "\n Ёще нет кс\n";
 	}
 	void button_6() {
 		string path = "Text.txt";
