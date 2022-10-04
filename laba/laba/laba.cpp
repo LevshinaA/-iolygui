@@ -8,6 +8,14 @@ using namespace std;
 
 struct Tube {
 public:
+	void filesave(string tube[]) {
+		length = tube[0];
+		diameter = tube[1];
+		if (tube[2] == "B")
+			feature = "В ремонте";
+		else if (tube[2] == "Не")
+			feature = "Не в ремонте";
+	}
 	void addparams() {
 		cout << "\nВведите длинну: ";
 		cin >> length;
@@ -29,7 +37,7 @@ public:
 		}
 	}
 	string show() {
-		return ("Длина: " + length + "   Диаметр : " + diameter + "   Признак : " + feature);
+		return (type + "   Длина: " + length + "   Диаметр: " + diameter + "   Признак: " + feature);
 	}
 	void change() {
 		cout << "\n1.Длина: " << length << "\n2.Диаметр: " << diameter << "\n3.Признак: " << feature << "\n\nВведите № параметра для редактирования";
@@ -62,7 +70,7 @@ public:
 		
 	}
 private:
-	string length, diameter, feature, feature_num;
+	string length, diameter, feature, feature_num, type="Tube";
 	int change_number;
 };
 
@@ -81,7 +89,7 @@ public:
 	}
 	string show() {
 		//SetConsoleCP(1251);
-		return ("Название: " + name + "     Колличество цехов: " + departments + "     Количество цехов в работе: " + departments_in_use + "     Эффективность: " + feature);
+		return (type + "Название: " + name + "     Колличество цехов: " + departments + "     Количество цехов в работе: " + departments_in_use + "     Эффективность: " + feature);
 		//SetConsoleCP(866);
 	}
 	void change() {
@@ -110,7 +118,7 @@ public:
 	}
 private:
 	int change_number;
-	string name, departments, departments_in_use,feature, type = "КС";
+	string name, departments, departments_in_use,feature, type = "KS";
 };
 
 class Main {
@@ -209,18 +217,42 @@ private:
 		fs.close();
 	}
 	void button_7() {
-		string path = "Text.txt",txt,proverka;
-		int t;
+		string path = "Text.txt", txt, proverka;
+		string tube[3],
+			ks[4];
+		int t=0, r=0, i;
 		fstream fs;
 		fs.open(path, fstream::in | fstream::out | fstream::app);
 		if (!fs.is_open())
 			cout << "Ошибка открытие файла";
 		while (!fs.eof()) {
-			getline(fs, txt);
-			cout << txt;
+			fs >> txt;
+			if (txt == "Tube") {
+				r = 0; t = 0; tube[2] = "";
+				Tube realtube;
+				while (!fs.eof()) {
+					fs >> txt;
+					t ++;
+					if (t % 2 == 0) {
+						tube[r] = txt;
+						r++;
+					}
+					if (tube[2] == "В" || tube[2] == "Не") {
+						realtube.filesave(tube);
+						tubebox.push_back(realtube);
+						break;
+					}
+
+				}
+			}
+			if (txt == "Ks") {
+				r = 0; t = 0;
+				Ks realks
+			}
 		}
 	}
 };
+
 int main() {
 	Main programm;
 
