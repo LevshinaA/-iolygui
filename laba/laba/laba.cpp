@@ -3,7 +3,6 @@
 #include <string>
 #include <fstream>
 #include <windows.h>
-#include <cstring>
 using namespace std;
 
 struct Tube {
@@ -11,10 +10,14 @@ public:
 	void filesave(string tube[]) {
 		length = tube[0];
 		diameter = tube[1];
-		if (tube[2] == "B")
-			feature = "В ремонте";
-		else if (tube[2] == "Не")
-			feature = "Не в ремонте";
+		if (tube[2] == "B" || tube[2] == "Не") {
+			if (tube[2] == "Не")
+				feature = "Не в ремонте";
+			else
+				feature = "В ремонте";
+		}
+		else
+			cout << "Некорректные данные из файла";
 	}
 	void addparams() {
 		cout << "\nВведите длинну: ";
@@ -76,6 +79,12 @@ private:
 
 struct Ks {
 public:
+	void filesave(string ks[]) {
+		name = ks[0];
+		departments = ks[1];
+		departments_in_use = ks[2];
+		feature = ks[3];
+	}
 	void addparams() {
 		cout << "\nВведите название: ";
 		cin >> name;
@@ -89,7 +98,7 @@ public:
 	}
 	string show() {
 		//SetConsoleCP(1251);
-		return (type + "Название: " + name + "     Колличество цехов: " + departments + "     Количество цехов в работе: " + departments_in_use + "     Эффективность: " + feature);
+		return (type + "     Название: " + name + "     Колличество_цехов: " + departments + "     Количество_цехов_в_работе: " + departments_in_use + "     Эффективность: " + feature);
 		//SetConsoleCP(866);
 	}
 	void change() {
@@ -219,7 +228,7 @@ private:
 	void button_7() {
 		string path = "Text.txt", txt, proverka;
 		string tube[3],
-			ks[4];
+			   ks[4];
 		int t=0, r=0, i;
 		fstream fs;
 		fs.open(path, fstream::in | fstream::out | fstream::app);
@@ -245,9 +254,22 @@ private:
 
 				}
 			}
-			if (txt == "Ks") {
-				r = 0; t = 0;
-				Ks realks
+			if (txt == "KS") {
+				r = 0; t = 0;ks[3]="";
+				Ks realKs;
+				while (!fs.eof()) {
+					fs >> txt;
+					t++;
+					if (t % 2 == 0) {
+						ks[r] = txt;
+						r++;
+					}
+					if (ks[3] != "") {
+						realKs.filesave(ks);
+						Ksbox.push_back(realKs);
+						break;
+					}
+				}
 			}
 		}
 	}
